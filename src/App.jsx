@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, cloneElement, useCallback } from 'react';
 import useSetState from 'ahooks/es/useSetState';
 import useMount from 'ahooks/es/useMount';
+import useUpdate from 'ahooks/es/useUpdate';
 
 export const defaultState = {
   isLoading: true,
@@ -38,6 +39,8 @@ const useManualPay = () => {
     console.log(2, context.queryPaymentSlips);
   }, [context, context.queryPaymentSlips]);
 
+  console.log(3, context)
+
   useMount(() => {
     context.setState({
       sendManualPay,
@@ -47,12 +50,14 @@ const useManualPay = () => {
 
 const A = () => {
   const context = useContext(PaymentContext);
+  const up = useUpdate()
 
   usePaymentSlips();
   useManualPay();
 
   const handle = () => {
     console.log(1, context.sendManualPay);
+    up()
     context.sendManualPay();
   };
 
